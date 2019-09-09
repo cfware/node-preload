@@ -21,8 +21,43 @@ npm i node-preload
 ```js
 'use strict';
 
-require('node-preload');
+const nodePreload = require('node-preload');
+
+// Request that all Node.js child processes preload @babel/register
+nodePreload.preloadAppend(require.resolve('@babel/register'));
+
+// Request that child processes be spawned with enviroment TEST1=value1
+nodePreload.propagateEnv('TEST1', 'value1');
 ```
+
+### preloadAppend(filename)
+
+Append `filename` to the list of modules to be preloaded.
+If `filename` is already in the list it will be moved to the end.
+
+### preloadInsert(filename)
+
+Insert `filename` to the list of modules to be preloaded.
+If `filename` is already in the list it will be moved to the beginning.
+
+### preloadRemove(filename)
+
+Remove `filename` from the list of modules to be preloaded.
+
+### preloadGetList()
+
+Retrieve an array listing the current filenames to be preloaded.
+
+### propagateEnv(name, value)
+
+Specify an environmental variable to be propagated to child processes.
+If `value` is undefined this cancels the propagation of the specified variable.
+
+### propagateGetEnv()
+
+Retrieve an object containing the environmental variables to be propagated
+to child processes.  Modifications to the returned object do not effect child
+processes, `propagateEnv` must be used to perform manipulations.
 
 ## Running tests
 
