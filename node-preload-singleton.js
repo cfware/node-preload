@@ -10,11 +10,9 @@
 const path = require('path');
 const {ChildProcess} = require('child_process');
 
-const nodeMajor = Number(process.versions.node.split('.')[0]);
 /* istanbul ignore next: version specific branching */
-const needsPathEnv = nodeMajor < 12 && __filename.includes(' ');
-/* istanbul ignore next: version specific branching */
-const {generateRequire, processNodePath} = nodeMajor < 12 ? require('./legacy-require.js') : require('./modern-require.js');
+const requireType = Number(process.versions.node.split('.')[0]) < 12 ? 'legacy' : 'modern';
+const {generateRequire, processNodePath, needsPathEnv} = require(`./node-preload-${requireType}-require.js`);
 
 function loadPropagated() {
 	try {

@@ -2,17 +2,18 @@
 
 const path = require('path');
 const {test} = require('tap');
-const legacyRequire = require('../legacy-require');
+const legacyRequire = require('../node-preload-legacy-require');
 
-const {generateRequire, processNodePath} = legacyRequire;
+const {generateRequire, processNodePath, needsPathEnv} = legacyRequire;
 const noSpaceFile = path.resolve('/dir/file.js');
 const spaceFile = path.resolve('/space dir/file.js');
 
 test('exports', async t => {
 	t.is(typeof legacyRequire, 'object');
-	t.deepEqual(Object.keys(legacyRequire).sort(), ['generateRequire', 'processNodePath']);
+	t.deepEqual(Object.keys(legacyRequire).sort(), ['generateRequire', 'needsPathEnv', 'processNodePath']);
 	t.is(typeof generateRequire, 'function');
 	t.is(typeof processNodePath, 'function');
+	t.is(needsPathEnv, __dirname.includes(' '));
 });
 
 test('generateRequire', async t => {

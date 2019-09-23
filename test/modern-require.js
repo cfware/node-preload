@@ -2,17 +2,18 @@
 
 const path = require('path');
 const {test} = require('tap');
-const modernRequire = require('../modern-require');
+const modernRequire = require('../node-preload-modern-require');
 
-const {generateRequire, processNodePath} = modernRequire;
+const {generateRequire, processNodePath, needsPathEnv} = modernRequire;
 const noSpaceFile = path.resolve('/dir/file.js');
 const spaceFile = path.resolve('/space dir/file.js');
 
 test('exports', async t => {
 	t.is(typeof modernRequire, 'object');
-	t.deepEqual(Object.keys(modernRequire).sort(), ['generateRequire', 'processNodePath']);
+	t.deepEqual(Object.keys(modernRequire).sort(), ['generateRequire', 'needsPathEnv', 'processNodePath']);
 	t.is(typeof generateRequire, 'function');
 	t.is(processNodePath, undefined);
+	t.is(needsPathEnv, false);
 });
 
 test('generateRequire', async t => {

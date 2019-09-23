@@ -4,8 +4,8 @@ const {test} = require('tap');
 
 require('../node-preload').unload();
 
-const nodeMajor = Number(process.versions.node.split('.')[0]);
-const {generateRequire} = nodeMajor < 12 ? require('../legacy-require.js') : require('../modern-require.js');
+const requireType = Number(process.versions.node.split('.')[0]) < 12 ? 'legacy' : 'modern';
+const {generateRequire} = require(`../node-preload-${requireType}-require.js`);
 
 const nodeOptionRequireSelf = generateRequire(require.resolve('../node-preload.js'));
 const exposeGC = '--expose-gc';

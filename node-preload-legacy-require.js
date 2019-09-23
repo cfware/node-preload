@@ -22,5 +22,6 @@ function processNodePath(value) {
 
 module.exports = {
 	generateRequire,
-	processNodePath
+	processNodePath,
+	needsPathEnv: __dirname.includes(' ')
 };

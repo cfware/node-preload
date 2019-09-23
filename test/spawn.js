@@ -3,8 +3,8 @@
 const {spawnSync} = require('child_process');
 const {test} = require('tap');
 
-const nodeMajor = Number(process.versions.node.split('.')[0]);
-const {generateRequire} = nodeMajor < 12 ? require('../legacy-require.js') : require('../modern-require.js');
+const requireType = Number(process.versions.node.split('.')[0]) < 12 ? 'legacy' : 'modern';
+const {generateRequire} = require(`../node-preload-${requireType}-require.js`);
 
 require('../node-preload').unload();
 const nodePreload = require('../node-preload');
