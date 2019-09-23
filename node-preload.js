@@ -16,14 +16,19 @@ function clone(obj) {
 module.exports = clone(singleton);
 module.exports.unload = unload;
 
-const {unpatch} = module.exports;
+const {unpatch, executePreload} = module.exports;
 delete module.exports.unpatch;
+delete module.exports.executePreload;
 
 if (!global[singletonNodePreload]) {
 	Object.defineProperty(global, singletonNodePreload, {
 		value: module.exports,
 		configurable: true
 	});
+
+	/* This is executed after setting the global singleton to deal with
+	 * situations where a preloaded module needs to `require('node-preload')` */
+	executePreload();
 }
 
 function unload() {

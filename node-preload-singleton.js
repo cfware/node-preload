@@ -122,9 +122,11 @@ const originalAsync = ChildProcess.prototype.spawn;
 spawnSyncBinding.spawn = wrappedSpawnFunction(spawnSyncBinding.spawn);
 ChildProcess.prototype.spawn = wrappedSpawnFunction(ChildProcess.prototype.spawn);
 
-preloadList.forEach(file => {
-	require(file);
-});
+function executePreload() {
+	preloadList.forEach(file => {
+		require(file);
+	});
+}
 
 function unpatch() {
 	spawnSyncBinding.spawn = originalSync;
@@ -147,5 +149,6 @@ module.exports = {
 	get propagateEnv() {
 		return propagate;
 	},
-	unpatch
+	unpatch,
+	executePreload
 };
