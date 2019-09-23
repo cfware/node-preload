@@ -46,7 +46,7 @@ async function main() {
 		singleton.preloadRemove(file1);
 		assert.strictEqual(process.env.TEST1, 'value1');
 		assert.strictEqual(process.env.TEST2, 'value2');
-		singleton.propagateEnv('TEST2');
+		delete singleton.propagateEnv.TEST2;
 
 		const {status, stdout, stderr} = await spawn(node, [bin, '2', type], {env: {a: 'a1', b: 'with "quoted".'}});
 		assert.strictEqual(stderr, '');

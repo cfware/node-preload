@@ -14,7 +14,6 @@ test('exports', async t => {
 		'preloadInsert',
 		'preloadRemove',
 		'propagateEnv',
-		'propagateGetEnv',
 		'unload'
 	]);
 });
@@ -24,9 +23,7 @@ test('unload and load', async t => {
 	t.ok(currentSingleton);
 
 	nodePreload.preloadAppend(__filename);
-	nodePreload.propagateEnv('anything', 'value');
 	t.ok(nodePreload.preloadGetList().includes(__filename));
-	t.is(nodePreload.propagateGetEnv().anything, 'value');
 
 	nodePreload.unload();
 	const newModule = require('../node-preload');
@@ -39,7 +36,7 @@ test('unload and load', async t => {
 	/* These are blank by default.  This can't be checked before unload as tap
 	 * may decide to have nyc avoid `spawn-wrap` in the future. */
 	t.deepEqual(newModule.preloadGetList(), []);
-	t.deepEqual(newModule.propagateGetEnv(), {});
+	t.deepEqual(newModule.propagateEnv, {});
 
 	const paths = {
 		preload: require.resolve('../node-preload.js'),

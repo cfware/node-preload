@@ -24,8 +24,8 @@ test('spawn', async t => {
 	const nodeOptionRequireSelf = generateRequire(require.resolve('../node-preload.js'));
 	nodePreload.preloadAppend(require.resolve('../fixtures/file1.js'));
 	nodePreload.preloadAppend(require.resolve('../fixtures/file2.js'));
-	nodePreload.propagateEnv('TEST1', 'value1');
-	nodePreload.propagateEnv('TEST2', 'value2');
+	nodePreload.propagateEnv.TEST1 = 'value1';
+	nodePreload.propagateEnv.TEST2 = 'value2';
 
 	runSpawn(t, 'spawn:');
 	runSpawn(t, 'spawn:', {NODE_OPTIONS: nodeOptionRequireSelf});

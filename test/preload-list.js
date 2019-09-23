@@ -13,7 +13,7 @@ function cleanLoad(propagated) {
 	delete require.cache[file2];
 
 	if (propagated) {
-		process.env.NODE_PRELOAD_POLYFILL = propagated;
+		process.env.NODE_POLYFILL_PRELOAD = propagated;
 	}
 
 	return require('../node-preload');
@@ -44,7 +44,7 @@ test('list management', async t => {
 
 test('simulated initial load', async t => {
 	t.deepEqual(cleanLoad(file1).preloadGetList(), [file1]);
-	t.notOk('NODE_PRELOAD_POLYFILL' in process.env);
+	t.notOk('NODE_POLYFILL_PRELOAD' in process.env);
 	t.deepEqual(global['node-preload-test'], [file1]);
 
 	t.deepEqual(
@@ -52,12 +52,12 @@ test('simulated initial load', async t => {
 		[file1, file2]
 	);
 	t.deepEqual(global['node-preload-test'], [file1, file2]);
-	t.notOk('NODE_PRELOAD_POLYFILL' in process.env);
+	t.notOk('NODE_POLYFILL_PRELOAD' in process.env);
 
 	t.deepEqual(
 		cleanLoad([file2, file1].join(path.delimiter)).preloadGetList(),
 		[file2, file1]
 	);
 	t.deepEqual(global['node-preload-test'], [file2, file1]);
-	t.notOk('NODE_PRELOAD_POLYFILL' in process.env);
+	t.notOk('NODE_POLYFILL_PRELOAD' in process.env);
 });

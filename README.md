@@ -27,7 +27,7 @@ const nodePreload = require('node-preload');
 nodePreload.preloadAppend(require.resolve('@babel/register'));
 
 // Request that child processes be spawned with enviroment TEST1=value1
-nodePreload.propagateEnv('TEST1', 'value1');
+nodePreload.propagateEnv.TEST1 = 'value1';
 ```
 
 ### preloadAppend(filename)
@@ -48,16 +48,10 @@ Remove `filename` from the list of modules to be preloaded.
 
 Retrieve an array listing the current filenames to be preloaded.
 
-### propagateEnv(name, value)
+### propagateEnv
 
-Specify an environmental variable to be propagated to child processes.
-If `value` is undefined this cancels the propagation of the specified variable.
-
-### propagateGetEnv()
-
-Retrieve an object containing the environmental variables to be propagated
-to child processes.  Modifications to the returned object do not effect child
-processes, `propagateEnv` must be used to perform manipulations.
+Similar to `process.env` but controls environmental variables to be propagated
+to child processes.
 
 ## Running tests
 

@@ -18,8 +18,8 @@ const {generateRequire, processNodePath} = nodeMajor < 12 ? require('./legacy-re
 
 function loadPropagated() {
 	try {
-		const envText = process.env.NODE_PROPAGATE_ENV;
-		delete process.env.NODE_PROPAGATE_ENV;
+		const envText = process.env.NODE_POLYFILL_PROPAGATE_ENV;
+		delete process.env.NODE_POLYFILL_PROPAGATE_ENV;
 
 		const envs = JSON.parse(envText);
 		return envs.reduce((env, name) => {
@@ -35,8 +35,8 @@ function loadPropagated() {
 }
 
 function loadPreloadList() {
-	const env = process.env.NODE_PRELOAD_POLYFILL;
-	delete process.env.NODE_PRELOAD_POLYFILL;
+	const env = process.env.NODE_POLYFILL_PRELOAD;
+	delete process.env.NODE_POLYFILL_PRELOAD;
 	if (!env) {
 		return [];
 	}
@@ -70,14 +70,14 @@ function processEnvPairs(options) {
 	});
 
 	env.NODE_OPTIONS = processNodeOptions(env.NODE_OPTIONS || '');
-	env.NODE_PRELOAD_POLYFILL = preloadList.join(path.delimiter);
+	env.NODE_POLYFILL_PRELOAD = preloadList.join(path.delimiter);
 
 	/* istanbul ignore next */
 	if (needsPathEnv) {
 		env.NODE_PATH = processNodePath(env.NODE_PATH || '');
 	}
 
-	env.NODE_PROPAGATE_ENV = JSON.stringify(Object.keys(propagate));
+	env.NODE_POLYFILL_PROPAGATE_ENV = JSON.stringify(Object.keys(propagate));
 	Object.entries(propagate).forEach(([name, value]) => {
 		env[name] = value;
 	});
@@ -104,23 +104,6 @@ function preloadAppend(filename) {
 
 function preloadGetList() {
 	return [...preloadList];
-}
-
-function propagateEnv(name, value) {
-	if (typeof value === 'undefined') {
-		delete propagate[name];
-		return;
-	}
-
-	if (typeof value !== 'string') {
-		value = `${value}`;
-	}
-
-	propagate[name] = value;
-}
-
-function propagateGetEnv() {
-	return {...propagate};
 }
 
 function wrappedSpawnFunction(fn) {
@@ -162,7 +145,9 @@ module.exports = {
 	preloadInsert,
 	preloadAppend,
 	preloadGetList,
-	propagateGetEnv,
-	propagateEnv,
+	/* BUGBUG: process.env is writable but I'm not sure that wanted here */
+	get propagateEnv() {
+		return propagate;
+	},
 	unpatch
 };

@@ -3,10 +3,18 @@
 const singletonNodePreload = Symbol.for('node-preload');
 const singleton = global[singletonNodePreload] || require('./node-preload-singleton.js');
 
-module.exports = {
-	...singleton,
-	unload
-};
+function clone(obj) {
+	const copy = Object.create(Object.getPrototypeOf(obj));
+
+	for (const key of Object.getOwnPropertyNames(obj)) {
+		Object.defineProperty(copy, key, Object.getOwnPropertyDescriptor(obj, key));
+	}
+
+	return copy;
+}
+
+module.exports = clone(singleton);
+module.exports.unload = unload;
 
 const {unpatch} = module.exports;
 delete module.exports.unpatch;
