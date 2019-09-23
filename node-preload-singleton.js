@@ -42,9 +42,32 @@ function loadPreloadList() {
 	return env.split(path.delimiter);
 }
 
+function findPreloadModule() {
+	/* This song-and-dance is to keep esm happy. */
+	let mod = module;
+	const seen = new Set([mod]);
+	while ((mod = mod.parent)) {
+		/* Generally if we're being preloaded then
+		 * mod.parent.id should be 'internal/preload' */
+		/* istanbul ignore next: paranoia */
+		if (seen.has(mod)) {
+			return module;
+		}
+
+		seen.add(mod);
+		/* istanbul ignore next: this is hit but coverage cannot be collected */
+		if (mod.id === 'internal/preload') {
+			return mod;
+		}
+	}
+
+	return module;
+}
+
 const nodeOptionRequireSelf = generateRequire(require.resolve('./node-preload.js'));
 const preloadList = loadPreloadList();
 const propagate = loadPropagated();
+const preloadModule = findPreloadModule();
 
 function processNodeOptions(value) {
 	if (value.includes(nodeOptionRequireSelf)) {
@@ -124,7 +147,7 @@ ChildProcess.prototype.spawn = wrappedSpawnFunction(ChildProcess.prototype.spawn
 
 function executePreload() {
 	preloadList.forEach(file => {
-		require(file);
+		preloadModule.require(file);
 	});
 }
 

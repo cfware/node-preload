@@ -25,6 +25,7 @@
 	},
 	"homepage": "https://github.com/cfware/node-preload#readme",
 	"devDependencies": {
+		"esm": "^3.2.25",
 		"standard-version": "^7.0.0",
 		"tap": "^14.6.1",
 		"xo": "^0.24.0"
