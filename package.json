@@ -10,6 +10,9 @@
 	"engines": {
 		"node": ">=8"
 	},
+	"files": [
+		"node-preload*.js"
+	],
 	"author": "Corey Farrell",
 	"license": "MIT",
 	"repository": {
