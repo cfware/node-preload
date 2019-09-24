@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2](https://github.com/cfware/node-preload/compare/v0.1.1...v0.1.2) (2019-09-24)
+
+
+### Bug Fixes
+
+* esm must be loaded from the internal/preload module ([a5444dd](https://github.com/cfware/node-preload/commit/a5444dd))
+
 ### [0.1.1](https://github.com/cfware/node-preload/compare/v0.1.0...v0.1.1) (2019-09-23)
 
 
