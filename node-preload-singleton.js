@@ -27,7 +27,7 @@ function loadPropagated() {
 
 			return env;
 		}, {});
-	} catch (error) {
+	} catch (_) {
 		return {};
 	}
 }
