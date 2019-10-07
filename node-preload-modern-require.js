@@ -1,7 +1,7 @@
 'use strict';
 
 function generateRequire(filename) {
-	return `--require "${filename.replace(/"/g, '\\"')}"`;
+	return `--require "${filename.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
 }
 
 module.exports = {
