@@ -9,11 +9,13 @@ const noSpaceFile = path.resolve('/dir/file.js');
 const spaceFile = path.resolve('/space dir/file.js');
 
 test('exports', async t => {
-	t.is(typeof modernRequire, 'object');
+	t.type(modernRequire, 'object');
 	t.deepEqual(Object.keys(modernRequire).sort(), ['generateRequire', 'needsPathEnv', 'processNodePath']);
-	t.is(typeof generateRequire, 'function');
+	t.type(generateRequire, 'function');
 	t.is(processNodePath, undefined);
-	t.is(needsPathEnv, false);
+	t.type(needsPathEnv, 'function');
+	t.is(needsPathEnv(noSpaceFile), false);
+	t.is(needsPathEnv(spaceFile), false);
 });
 
 test('generateRequire', async t => {

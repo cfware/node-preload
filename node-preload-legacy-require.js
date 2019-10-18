@@ -11,17 +11,17 @@ function generateRequire(filename) {
 	return `--require ${filename}`;
 }
 
-function processNodePath(value) {
+function processNodePath(value, dir) {
 	const existing = value === '' ? [] : value.split(path.delimiter);
-	if (existing.includes(__dirname)) {
+	if (existing.includes(dir)) {
 		return value;
 	}
 
-	return existing.concat(__dirname).join(path.delimiter);
+	return existing.concat(dir).join(path.delimiter);
 }
 
 module.exports = {
 	generateRequire,
 	processNodePath,
-	needsPathEnv: __dirname.includes(' ')
+	needsPathEnv: dir => dir.includes(' ')
 };

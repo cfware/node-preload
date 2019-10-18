@@ -65,20 +65,36 @@ function findPreloadModule() {
 }
 
 const nodeOptionRequireSelf = generateRequire(require.resolve('./node-preload.js'));
+/* istanbul ignore next: yarn specific */
+const pnpapiFile = () => process.versions.pnp && require.resolve('pnpapi');
+
 const preloadList = loadPreloadList();
 const propagate = loadPropagated();
 const preloadModule = findPreloadModule();
 
 function processNodeOptions(value) {
-	if (value.includes(nodeOptionRequireSelf)) {
-		return value;
+	/* istanbul ignore next: yarn specific */
+	const requirePNPAPI = (process.versions.pnp && generateRequire(pnpapiFile())) || '';
+	/* istanbul ignore next: yarn specific */
+	if (process.versions.pnp) {
+		/* Need pnpapi to be first, remove so we can reinsert before node-preload */
+		value = value.replace(requirePNPAPI, '');
 	}
 
-	if (value !== '') {
-		value = ' ' + value;
+	if (!value.includes(nodeOptionRequireSelf)) {
+		if (value !== '') {
+			value = ' ' + value;
+		}
+
+		value = `${nodeOptionRequireSelf}${value}`;
 	}
 
-	return `${nodeOptionRequireSelf}${value}`;
+	/* istanbul ignore next: yarn specific */
+	if (process.versions.pnp) {
+		value = `${requirePNPAPI} ${value}`;
+	}
+
+	return value;
 }
 
 function processEnvPairs(options) {
@@ -94,8 +110,16 @@ function processEnvPairs(options) {
 	env.NODE_POLYFILL_PRELOAD = preloadList.join(path.delimiter);
 
 	/* istanbul ignore next */
-	if (needsPathEnv) {
-		env.NODE_PATH = processNodePath(env.NODE_PATH || '');
+	if (needsPathEnv(__dirname)) {
+		env.NODE_PATH = processNodePath(env.NODE_PATH || '', __dirname);
+	}
+
+	/* istanbul ignore next: yarn specific */
+	if (process.versions.pnp) {
+		const pnpapiDir = path.dirname(pnpapiFile());
+		if (needsPathEnv(pnpapiDir)) {
+			env.NODE_PATH = processNodePath(env.NODE_PATH || '', pnpapiDir);
+		}
 	}
 
 	env.NODE_POLYFILL_PROPAGATE_ENV = JSON.stringify(Object.keys(propagate));

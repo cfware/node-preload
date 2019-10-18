@@ -9,11 +9,12 @@ const noSpaceFile = path.resolve('/dir/file.js');
 const spaceFile = path.resolve('/space dir/file.js');
 
 test('exports', async t => {
-	t.is(typeof legacyRequire, 'object');
+	t.type(legacyRequire, 'object');
 	t.deepEqual(Object.keys(legacyRequire).sort(), ['generateRequire', 'needsPathEnv', 'processNodePath']);
-	t.is(typeof generateRequire, 'function');
-	t.is(typeof processNodePath, 'function');
-	t.is(needsPathEnv, __dirname.includes(' '));
+	t.type(generateRequire, 'function');
+	t.type(processNodePath, 'function');
+	t.is(needsPathEnv(noSpaceFile), false);
+	t.is(needsPathEnv(spaceFile), true);
 });
 
 test('generateRequire', async t => {
@@ -29,8 +30,8 @@ test('generateRequire', async t => {
 test('processNodePath', async t => {
 	const dirname = path.resolve(__dirname, '..');
 
-	t.is(processNodePath(''), dirname);
-	t.is(processNodePath(dirname), dirname);
-	t.is(processNodePath([dirname, __dirname].join(path.delimiter)), [dirname, __dirname].join(path.delimiter));
-	t.is(processNodePath(__dirname), [__dirname, dirname].join(path.delimiter));
+	t.is(processNodePath('', dirname), dirname);
+	t.is(processNodePath(dirname, dirname), dirname);
+	t.is(processNodePath([dirname, __dirname].join(path.delimiter), dirname), [dirname, __dirname].join(path.delimiter));
+	t.is(processNodePath(__dirname, dirname), [__dirname, dirname].join(path.delimiter));
 });
