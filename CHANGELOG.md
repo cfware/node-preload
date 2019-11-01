@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.4](https://github.com/cfware/node-preload/compare/v0.1.3...v0.1.4) (2019-11-01)
+
+
+### Features
+
+* Support running under yarn pnp ([#3](https://github.com/cfware/node-preload/issues/3)) ([15d949b](https://github.com/cfware/node-preload/commit/15d949b)), closes [istanbuljs/nyc#1204](https://github.com/istanbuljs/nyc/issues/1204)
+
 ### [0.1.3](https://github.com/cfware/node-preload/compare/v0.1.2...v0.1.3) (2019-10-07)
 
 

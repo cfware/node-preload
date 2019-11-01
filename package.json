@@ -1,6 +1,6 @@
 {
 	"name": "node-preload",
-	"version": "0.1.3",
+	"version": "0.1.4",
 	"description": "Request that Node.js child processes preload modules",
 	"scripts": {
 		"release": "standard-version --sign",
