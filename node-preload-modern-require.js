@@ -8,5 +8,5 @@ module.exports = {
 	generateRequire,
 	// The export explicitly exists but is undefined as it will never be called
 	processNodePath: undefined,
-	needsPathEnv: false
+	needsPathEnv: () => false
 };
