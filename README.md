@@ -62,6 +62,12 @@ npm install
 npm test
 ```
 
+## `node-preload` for enterprise
+
+Available as part of the Tidelift Subscription.
+
+The maintainers of `node-preload` and thousands of other packages are working with Tidelift to deliver commercial support and maintenance for the open source dependencies you use to build your applications. Save time, reduce risk, and improve code health, while paying the maintainers of the exact dependencies you use. [Learn more.](https://tidelift.com/subscription/pkg/npm-node-preload?utm_source=npm-node-preload&utm_medium=referral&utm_campaign=enterprise&utm_term=repo)
+
 [npm-image]: https://img.shields.io/npm/v/node-preload.svg
 [npm-url]: https://npmjs.org/package/node-preload
 [travis-image]: https://travis-ci.org/cfware/node-preload.svg?branch=master
