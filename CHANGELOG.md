@@ -9,7 +9,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 * Support running under yarn pnp ([#3](https://github.com/cfware/node-preload/issues/3)) ([15d949b](https://github.com/cfware/node-preload/commit/15d949b)), closes [istanbuljs/nyc#1204](https://github.com/istanbuljs/nyc/issues/1204)
 
-### [0.1.3](https://github.com/cfware/node-preload/compare/v0.1.2...v0.1.3) (2019-10-07)
+## [0.1.3](https://github.com/cfware/node-preload/compare/v0.1.2...v0.1.3) (2019-10-07)
 
 
 ### Bug Fixes
@@ -23,7 +23,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 * esm must be loaded from the internal/preload module ([a5444dd](https://github.com/cfware/node-preload/commit/a5444dd))
 
-### [0.1.1](https://github.com/cfware/node-preload/compare/v0.1.0...v0.1.1) (2019-09-23)
+## [0.1.1](https://github.com/cfware/node-preload/compare/v0.1.0...v0.1.1) (2019-09-23)
 
 
 ### Bug Fixes
