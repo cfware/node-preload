@@ -1,0 +1,10 @@
+*.tgz
+.nyc_output
+coverage
+.travis.yml
+.taprc
+.github
+fixtures
+test
+nyc.config.js
+npm-run-test.js

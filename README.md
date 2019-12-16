@@ -21,46 +21,15 @@ npm i node-preload
 ```js
 'use strict';
 
-const nodePreload = require('node-preload');
+const preloadList = require('node-preload');
 
 // Request that all Node.js child processes preload @babel/register
-nodePreload.preloadAppend(require.resolve('@babel/register'));
-
-// Request that child processes be spawned with enviroment TEST1=value1
-nodePreload.propagateEnv.TEST1 = 'value1';
+preloadList.push(require.resolve('@babel/register'));
 ```
 
-### preloadAppend(filename)
+## Limitations
 
-Append `filename` to the list of modules to be preloaded.
-If `filename` is already in the list it will be moved to the end.
-
-### preloadInsert(filename)
-
-Insert `filename` to the list of modules to be preloaded.
-If `filename` is already in the list it will be moved to the beginning.
-
-### preloadRemove(filename)
-
-Remove `filename` from the list of modules to be preloaded.
-
-### preloadGetList()
-
-Retrieve an array listing the current filenames to be preloaded.
-
-### propagateEnv
-
-Similar to `process.env` but controls environmental variables to be propagated
-to child processes.
-
-## Running tests
-
-Tests are provided by xo and ava.
-
-```sh
-npm install
-npm test
-```
+Worker threads are not directly supported by this module, results may vary.
 
 ## `node-preload` for enterprise
 

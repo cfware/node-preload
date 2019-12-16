@@ -1,33 +1,27 @@
 'use strict';
 
 const {spawnSync} = require('child_process');
-const {test} = require('tap');
+const {test} = require('tape');
 
-require('../node-preload').unload();
-const nodePreload = require('../node-preload');
+const preloadList = require('..');
 
 function runSpawn(t, args, env) {
 	const {status, stdout, stderr} = spawnSync(
 		process.argv[0],
-		args.concat(require.resolve('../fixtures/esm.mjs')),
+		args.concat(require.resolve('../fixtures/esm.js')),
 		{cwd: __dirname, encoding: 'utf8', env}
 	);
-	t.is(stderr, '');
-	t.is(status, 0);
-	t.is(stdout, '');
+	t.equal(stderr, '');
+	t.equal(status, 0);
+	t.equal(stdout, '');
 }
 
-test('spawn', async t => {
+test('spawn', t => {
 	const esm = require.resolve('esm');
-	nodePreload.preloadAppend(esm);
+	preloadList.push(esm);
 
 	runSpawn(t, []);
 	runSpawn(t, [], {});
 
-	/* Preload something other than esm then use `-r esm` on the command-line. */
-	nodePreload.preloadRemove(esm);
-	nodePreload.preloadAppend(require.resolve('../fixtures/file1.js'));
-
-	runSpawn(t, ['-r', 'esm']);
-	runSpawn(t, ['-r', 'esm'], {});
+	t.end();
 });

@@ -5,15 +5,12 @@
 	"scripts": {
 		"release": "standard-version --sign",
 		"pretest": "xo",
-		"test": "tap"
+		"test": "nyc tape test/*.js"
 	},
 	"engines": {
 		"node": ">=8"
 	},
-	"main": "node-preload.js",
-	"files": [
-		"node-preload*.js"
-	],
+	"main": "index.js",
 	"author": "Corey Farrell",
 	"license": "MIT",
 	"repository": {
@@ -24,10 +21,30 @@
 		"url": "https://github.com/cfware/node-preload/issues"
 	},
 	"homepage": "https://github.com/cfware/node-preload#readme",
+	"dependencies": {
+		"process-on-spawn": "^1.0.0"
+	},
 	"devDependencies": {
 		"esm": "^3.2.25",
+		"glob": "^7.1.6",
+		"nyc": "^15.0.0-beta.3",
 		"standard-version": "^7.0.0",
-		"tap": "^14.6.5",
+		"tape": "^4.11.0",
 		"xo": "^0.25.3"
+	},
+	"xo": {
+		"rules": {
+			"import/no-unassigned-import": [
+				2,
+				{
+					"allow": [
+						"hook-spawn.js"
+					]
+				}
+			]
+		},
+		"ignores": [
+			"fixtures/esm.js"
+		]
 	}
 }
