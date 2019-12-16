@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/cfware/node-preload/compare/v0.1.4...v0.2.0) (2019-12-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* The API is completely rewritten, the export is now an
+Array.
+* Propagated variables are no longer supported.  For this
+functionality preload a local module which uses `process-on-spawn`
+directly.
+
+### Features
+
+* Use process-on-spawn ([#6](https://github.com/cfware/node-preload/issues/6)) ([2decb3a](https://github.com/cfware/node-preload/commit/2decb3a32a00084d089d964de6440e9f7817d563))
+
 ## [0.1.4](https://github.com/cfware/node-preload/compare/v0.1.3...v0.1.4) (2019-11-01)
 
 
