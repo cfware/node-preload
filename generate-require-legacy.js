@@ -1,6 +1,5 @@
 'use strict';
 
-/* This file must remain in the same directory as node-preload.js. */
 const path = require('path');
 
 function generateRequire(filename) {
@@ -11,7 +10,8 @@ function generateRequire(filename) {
 	return `--require ${filename}`;
 }
 
-function processNodePath(value, dir) {
+function processNodePath(value) {
+	const dir = path.dirname(require.resolve('./preload-path/node-preload.js'));
 	const existing = value === '' ? [] : value.split(path.delimiter);
 	if (existing.includes(dir)) {
 		return value;
