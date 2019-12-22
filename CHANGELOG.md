@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.1](https://github.com/cfware/node-preload/compare/v0.2.0...v0.2.1) (2019-12-22)
+
+
+### Bug Fixes
+
+* Support jumping between node.js versions ([#7](https://github.com/cfware/node-preload/issues/7)) ([68950a0](https://github.com/cfware/node-preload/commit/68950a07ab153cda5e0b5fec1407973169443bbb)), closes [istanbuljs/nyc#1246](https://github.com/istanbuljs/nyc/issues/1246)
+
 ## [0.2.0](https://github.com/cfware/node-preload/compare/v0.1.4...v0.2.0) (2019-12-16)
 
 
