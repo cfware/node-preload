@@ -2,7 +2,7 @@
 
 module.exports = {
 	all: true,
-	checkCoverage: true,
+	checkCoverage: process.platform !== 'win32',
 	functions: 100,
 	lines: 100,
 	statements: 100,
