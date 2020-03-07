@@ -11,9 +11,11 @@ function runSpawn(t, args, env) {
 		args.concat(require.resolve('../fixtures/esm.js')),
 		{cwd: __dirname, encoding: 'utf8', env}
 	);
-	t.equal(stderr, '');
-	t.equal(status, 0);
-	t.equal(stdout, '');
+	t.same({status, stdout, stderr}, {
+		status: 0,
+		stderr: '',
+		stdout: ''
+	}, env === undefined ? 'undefined env' : 'clear env');
 }
 
 test('spawn', t => {

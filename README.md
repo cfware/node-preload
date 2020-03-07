@@ -1,6 +1,6 @@
 # node-preload
 
-[![Travis CI][travis-image]][travis-url]
+![Tests][tests-status]
 [![Greenkeeper badge][gk-image]](https://greenkeeper.io/)
 [![NPM Version][npm-image]][npm-url]
 [![NPM Downloads][downloads-image]][downloads-url]
@@ -39,8 +39,7 @@ The maintainers of `node-preload` and thousands of other packages are working wi
 
 [npm-image]: https://img.shields.io/npm/v/node-preload.svg
 [npm-url]: https://npmjs.org/package/node-preload
-[travis-image]: https://travis-ci.org/cfware/node-preload.svg?branch=master
-[travis-url]: https://travis-ci.org/cfware/node-preload
+[tests-status]: https://github.com/cfware/node-preload/workflows/Tests/badge.svg
 [gk-image]: https://badges.greenkeeper.io/cfware/node-preload.svg
 [downloads-image]: https://img.shields.io/npm/dm/node-preload.svg
 [downloads-url]: https://npmjs.org/package/node-preload

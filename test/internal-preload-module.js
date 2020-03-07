@@ -6,6 +6,6 @@ const {test} = require('tape');
 const internalPreloadModule = require('../internal-preload-module.js');
 
 test('when not loaded via `--require`', t => {
-	t.equal(internalPreloadModule.id, require.resolve('../internal-preload-module.js'));
+	t.equal(internalPreloadModule.id, require.resolve('../internal-preload-module.js'), 'module id matches');
 	t.end();
 });
