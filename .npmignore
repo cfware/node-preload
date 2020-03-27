@@ -1,7 +1,6 @@
 *.tgz
 .nyc_output
 coverage
-.travis.yml
 .github
 fixtures
 test
