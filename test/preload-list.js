@@ -15,26 +15,18 @@ function preloadList() {
 	return require(mod);
 }
 
-test('no list', t => {
+test('preload lists', t => {
 	delete process.env[preloadListEnv];
-	t.deepEqual(preloadList(), []);
-	t.end();
-});
+	t.same(preloadList(), [], 'empty array');
 
-test('empty list', t => {
 	process.env[preloadListEnv] = '';
-	t.deepEqual(preloadList(), []);
-	t.end();
-});
+	t.deepEqual(preloadList(), [], 'empty array');
 
-test('one item', t => {
 	process.env[preloadListEnv] = file1;
-	t.deepEqual(preloadList(), [file1]);
-	t.end();
-});
+	t.deepEqual(preloadList(), [file1], 'one item');
 
-test('two items', t => {
 	process.env[preloadListEnv] = [file1, file2].join(path.delimiter);
-	t.deepEqual(preloadList(), [file1, file2]);
+	t.deepEqual(preloadList(), [file1, file2], 'two items');
+
 	t.end();
 });

@@ -13,22 +13,33 @@ const backslashFile = path.resolve('/back\\slash/file.js');
 const isWindows = process.platform === 'win32';
 
 test('exports', t => {
-	t.equal(typeof legacyRequire, 'object');
-	t.same(Object.keys(legacyRequire).sort(), ['generateRequire', 'needsPathEnv', 'processNodePath']);
-	t.equal(typeof generateRequire, 'function');
-	t.equal(typeof processNodePath, 'function');
-	t.equal(needsPathEnv(plainFile), isWindows);
-	t.equal(needsPathEnv(spaceFile), true);
-	t.equal(needsPathEnv(quoteFile), true);
-	t.equal(needsPathEnv(backslashFile), true);
+	t.same(
+		Object.keys(legacyRequire).sort().map(name => [name, typeof legacyRequire[name]]),
+		[
+			['generateRequire', 'function'],
+			['needsPathEnv', 'function'],
+			['processNodePath', 'function']
+		],
+		'exports functions'
+	);
+
+	t.end();
+});
+
+test('needsPathEnv', t => {
+	t.equal(needsPathEnv(plainFile), isWindows, 'plain file');
+	t.equal(needsPathEnv(spaceFile), true, 'space file');
+	t.equal(needsPathEnv(quoteFile), true, 'quote file');
+	t.equal(needsPathEnv(backslashFile), true, 'backslash file');
+
 	t.end();
 });
 
 test('generateRequire', t => {
-	t.equal(generateRequire(plainFile), `--require ${isWindows ? path.basename(plainFile) : plainFile}`);
-	t.equal(generateRequire(spaceFile), `--require ${path.basename(spaceFile)}`);
-	t.equal(generateRequire(quoteFile), `--require ${path.basename(quoteFile)}`);
-	t.equal(generateRequire(backslashFile), `--require ${path.basename(backslashFile)}`);
+	t.equal(generateRequire(plainFile), `--require ${isWindows ? path.basename(plainFile) : plainFile}`, 'plain file');
+	t.equal(generateRequire(spaceFile), `--require ${path.basename(spaceFile)}`, 'space file');
+	t.equal(generateRequire(quoteFile), `--require ${path.basename(quoteFile)}`, 'quote file');
+	t.equal(generateRequire(backslashFile), `--require ${path.basename(backslashFile)}`, 'backslash file');
 
 	t.end();
 });
@@ -36,9 +47,17 @@ test('generateRequire', t => {
 test('processNodePath', t => {
 	const dirname = path.resolve(__dirname, '..', 'preload-path');
 
-	t.equal(processNodePath('', dirname), dirname);
-	t.equal(processNodePath(dirname, dirname), dirname);
-	t.equal(processNodePath([dirname, __dirname].join(path.delimiter), dirname), [dirname, __dirname].join(path.delimiter));
-	t.equal(processNodePath(__dirname, dirname), [__dirname, dirname].join(path.delimiter));
+	t.equal(processNodePath('', dirname), dirname, 'started empty');
+	t.equal(processNodePath(dirname, dirname), dirname, 'ignore single path duplicate');
+	t.equal(
+		processNodePath([dirname, __dirname].join(path.delimiter), dirname),
+		[dirname, __dirname].join(path.delimiter),
+		'ignore multiple path duplicate'
+	);
+	t.equal(
+		processNodePath(__dirname, dirname),
+		[__dirname, dirname].join(path.delimiter),
+		'add path'
+	);
 	t.end();
 });

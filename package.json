@@ -5,7 +5,9 @@
 	"scripts": {
 		"release": "standard-version --sign",
 		"pretest": "xo",
-		"test": "nyc tape test/*.js"
+		"tests-only": "nyc --no-check-coverage -s tape test/*.js | tap-spec",
+		"test": "npm run -s tests-only",
+		"posttest": "nyc report"
 	},
 	"engines": {
 		"node": ">=8"
@@ -29,6 +31,7 @@
 		"glob": "^7.1.6",
 		"nyc": "^15.0.0",
 		"standard-version": "^7.0.0",
+		"tap-spec": "^5.0.0",
 		"tape": "^4.11.0",
 		"xo": "^0.25.3"
 	},
