@@ -30,7 +30,7 @@
 		"esm": "^3.2.25",
 		"glob": "^7.1.6",
 		"nyc": "^15.0.0",
-		"standard-version": "^7.0.0",
+		"standard-version": "^8.0.0",
 		"tap-spec": "^5.0.0",
 		"tape": "^5.0.0",
 		"xo": "^0.25.3"
